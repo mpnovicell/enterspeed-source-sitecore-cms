@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Enterspeed.Source.Sdk.Api.Models.Properties;
 using Enterspeed.Source.SitecoreCms.V8.Models.Configuration;
+using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 
@@ -76,17 +77,24 @@ namespace Enterspeed.Source.SitecoreCms.V8.Services.DataProperties.DefaultFieldC
 
             string url = null;
 
+            Item targetItem = null;
+            
+            if (linkField.TargetID != ID.Null)
+            {
+                targetItem = item.Database.GetItem(linkField.TargetID, item.Language);
+            }
+
             if (linkField.LinkType == "media")
             {
-                url = _urlService.GetMediaUrl(linkField.TargetItem, siteInfo);
+                url = _urlService.GetMediaUrl(targetItem, siteInfo);
             }
             else if (linkField.LinkType == "internal")
             {
-                url = _urlService.GetItemUrl(linkField.TargetItem, siteInfo);
+                url = _urlService.GetItemUrl(targetItem, siteInfo);
 
-                if (linkField.TargetItem != null)
+                if (targetItem != null)
                 {
-                    properties.Add(PropertyTargetType, new StringEnterspeedProperty(PropertyTargetType, linkField.TargetItem.TemplateName));
+                    properties.Add(PropertyTargetType, new StringEnterspeedProperty(PropertyTargetType, targetItem.TemplateName));
                     properties.Add(PropertyTargetId, new StringEnterspeedProperty(PropertyTargetId, _enterspeedIdentityService.GetId(linkField.TargetID.ToGuid(), item.Language)));
                 }
             }
