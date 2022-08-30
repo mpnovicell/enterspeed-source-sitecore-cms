@@ -20,6 +20,8 @@ namespace Enterspeed.Source.SitecoreCms.V8.Services
 
             fieldName = fieldName.Replace(" ", string.Empty); // i.e. "Link Text" becomes "LinkText"
 
+            fieldName = fieldName.Replace("-", string.Empty); // i.e "Link-Text" becomes "LinkText"
+
             fieldName = fieldName.Trim(); // i.e. "LinkText " becomes "LinkText"
 
             fieldName = fieldName.ToLower(); // i.e. "LinkText" becomes "linktext"
