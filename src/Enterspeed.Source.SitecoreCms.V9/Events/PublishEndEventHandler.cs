@@ -38,6 +38,7 @@ namespace Enterspeed.Source.SitecoreCms.V9.Events
             var rootItem = publisher.Options.RootItem;
 
             var siteConfigurations = _enterspeedConfigurationService.GetConfiguration();
+
             foreach (EnterspeedSitecoreConfiguration configuration in siteConfigurations)
             {
                 if (!configuration.IsEnabled)
@@ -46,6 +47,16 @@ namespace Enterspeed.Source.SitecoreCms.V9.Events
                 }
 
                 if (!HasAllowedPath(rootItem))
+                {
+                    continue;
+                }
+
+                if (configuration.ConfigurationElement.Excludes.ExcludedIds.Contains(rootItem.ID.Guid))
+                {
+                    continue;
+                }
+
+                if (configuration.ConfigurationElement.Excludes.ExcludedPath.Any(x => rootItem.Paths.ContentPath.Contains(x)))
                 {
                     continue;
                 }

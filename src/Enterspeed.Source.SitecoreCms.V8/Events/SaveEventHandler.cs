@@ -56,7 +56,6 @@ namespace Enterspeed.Source.SitecoreCms.V8.Events
                 {
                     continue;
                 }
-                    
                 if (configuration.ConfigurationElement.Excludes.ExcludedPath.Any(x=>sourceItem.Paths.ContentPath.Contains(x)))
                 {
                     continue;
