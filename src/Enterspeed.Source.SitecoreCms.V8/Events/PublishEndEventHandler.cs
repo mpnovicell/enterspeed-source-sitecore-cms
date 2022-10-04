@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Enterspeed.Source.SitecoreCms.V8.Extensions;
@@ -45,7 +46,15 @@ namespace Enterspeed.Source.SitecoreCms.V8.Events
                 {
                     continue;
                 }
-
+                if (configuration.ConfigurationElement.Excludes.ExcludedIds.Contains(rootItem.ID.Guid))
+                {
+                    continue;
+                }
+                    
+                if (configuration.ConfigurationElement.Excludes.ExcludedPath.Any(x=>rootItem.Paths.ContentPath.Contains(x)))
+                {
+                    continue;
+                }
                 EnterspeedSiteInfo siteOfItem = configuration.GetSite(rootItem);
                 if (siteOfItem == null) 
                 {

@@ -86,7 +86,15 @@ namespace Enterspeed.Source.SitecoreCms.V8.Events
                 {
                     continue;
                 }
-
+                if (configuration.ConfigurationElement.Excludes.ExcludedIds.Contains(sourceItem.ID.Guid))
+                {
+                    continue;
+                }
+                    
+                if (configuration.ConfigurationElement.Excludes.ExcludedPath.Any(x=>sourceItem.Paths.ContentPath.Contains(x)))
+                {
+                    continue;
+                }
                 // Handling if the item was deleted or unpublished
                 bool itemIsDeleted = context.Action == PublishAction.DeleteTargetItem;
 
