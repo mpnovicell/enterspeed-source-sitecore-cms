@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Enterspeed.Source.Sdk.Domain.Services;
 using Enterspeed.Source.SitecoreCms.V8.Models.Configuration;
 using Enterspeed.Source.SitecoreCms.V8.Providers;
@@ -37,7 +38,7 @@ namespace Enterspeed.Source.SitecoreCms.V8.Events
             {
                 return;
             }
-
+        
             var siteConfigurations = _enterspeedConfigurationService.GetConfiguration();
             foreach (EnterspeedSitecoreConfiguration configuration in siteConfigurations)
             {
@@ -47,6 +48,15 @@ namespace Enterspeed.Source.SitecoreCms.V8.Events
                 }
 
                 if (!configuration.IsPreview)
+                {
+                    continue;
+                }
+
+                if (configuration.ConfigurationElement.Excludes.ExcludedIds.Contains(sourceItem.ID.Guid))
+                {
+                    continue;
+                }
+                if (configuration.ConfigurationElement.Excludes.ExcludedPath.Any(x=>sourceItem.Paths.ContentPath.Contains(x)))
                 {
                     continue;
                 }

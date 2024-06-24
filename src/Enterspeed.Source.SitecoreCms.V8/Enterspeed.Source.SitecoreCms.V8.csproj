@@ -135,6 +135,7 @@
     <Compile Include="Events\PublishEndEventHandler.cs" />
     <Compile Include="Events\SaveEventHandler.cs" />
     <Compile Include="Extensions\ItemExtensions.cs" />
+    <Compile Include="Models\Configuration\EnterspeedConfigurationElement.cs" />
     <Compile Include="Models\Configuration\EnterspeedIDs.cs" />
     <Compile Include="Models\Configuration\EnterspeedSiteInfo.cs" />
     <Compile Include="Models\EnterspeedSitecoreIdentity.cs" />
